@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen Redes — Prueba Lunes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;800&display=swap');
+
+  :root {
+    --bg: #0a0a12;
+    --surface: #12121e;
+    --surface2: #1a1a2e;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --accent3: #43e97b;
+    --text: #e8e8f0;
+    --muted: #8888aa;
+    --border: #2a2a45;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 0 0 60px 0;
+  }
+
+  /* HEADER */
+  .hero {
+    background: linear-gradient(135deg, #0d0d1f 0%, #1a0a3d 50%, #0a1a2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 50px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(108,99,255,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(67,233,123,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent3);
+    border: 1px solid var(--accent3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.15;
+    background: linear-gradient(90deg, #fff 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 14px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* SECTION TITLES */
+  .section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 48px 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--accent); }
+
+  .card-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    background: rgba(108,99,255,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 4px;
+    padding: 2px 8px;
+    letter-spacing: 1px;
+  }
+  .card p { color: #c0c0d8; font-size: 14px; }
+
+  /* TABLE */
+  .net-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-bottom: 6px;
+  }
+  .net-table th {
+    background: var(--surface2);
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .net-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(42,42,69,0.5);
+    vertical-align: top;
+  }
+  .net-table tr:last-child td { border-bottom: none; }
+  .net-table tr:hover td { background: rgba(108,99,255,0.05); }
+  .sigla {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--accent3);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* PILLARS GRID */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  @media(max-width:640px){ .grid2,.grid3 { grid-template-columns: 1fr; } }
+
+  .pillar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .pillar h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .pillar p { font-size: 13px; color: #b0b0c8; }
+
+  /* ACCENT COLORS for pillars */
+  .c-purple { border-top: 3px solid var(--accent); }
+  .c-green  { border-top: 3px solid var(--accent3); }
+  .c-pink   { border-top: 3px solid var(--accent2); }
+  .c-blue   { border-top: 3px solid #38bdf8; }
+  .c-orange { border-top: 3px solid #fb923c; }
+  .c-yellow { border-top: 3px solid #fbbf24; }
+
+  /* NUEVES TABLE */
+  .nueves { font-family: 'Space Mono', monospace; font-size: 12.5px; }
+  .nueves td { padding: 7px 12px; border-bottom: 1px solid var(--border); }
+  .nueves td:first-child { color: var(--accent3); font-weight: 700; }
+
+  /* TOPOLOGY GRID */
+  .topo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 6px; }
+  @media(max-width:600px){ .topo-grid { grid-template-columns: 1fr; } }
+  .topo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .topo-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+  .topo-card p { font-size: 13px; color: #b0b0c8; }
+  .topo-card .pro { color: var(--accent3); font-size: 12px; margin-top: 6px; }
+  .topo-card .con { color: var(--accent2); font-size: 12px; }
+
+  /* GLOSARIO */
+  .glosario-item { border-bottom: 1px solid var(--border); padding: 12px 0; }
+  .glosario-item:last-child { border-bottom: none; }
+  .glosario-item strong {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--accent3);
+  }
+  .glosario-item p { font-size: 13.5px; color: #c0c0d8; margin-top: 3px; }
+
+  /* QoS steps */
+  .step-list { counter-reset: steps; list-style: none; }
+  .step-list li {
+    counter-increment: steps;
+    padding: 10px 0 10px 48px;
+    border-bottom: 1px solid rgba(42,42,69,0.5);
+    position: relative;
+    font-size: 14px;
+    color: #c0c0d8;
+  }
+  .step-list li::before {
+    content: counter(steps);
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 28px; height: 28px;
+    background: rgba(108,99,255,0.2);
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* Sticky TOC */
+  .toc { 
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 32px 0 0;
+  }
+  .toc h3 { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-family: 'Space Mono', monospace; color: var(--muted); margin-bottom: 12px; }
+  .toc a { display: block; color: #a0a0c0; font-size: 13.5px; text-decoration: none; padding: 4px 0; }
+  .toc a:hover { color: var(--accent); }
+
+  /* MODELS */
+  .model-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .model-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: rgba(108,99,255,0.4);
+    line-height: 1;
+  }
+  .model-name { font-size: 18px; font-weight: 700; }
+
+  ul.bullets { list-style: none; padding: 0; }
+  ul.bullets li {
+    padding: 5px 0 5px 20px;
+    position: relative;
+    font-size: 13.5px;
+    color: #c0c0d8;
+  }
+  ul.bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .highlight-box {
+    background: rgba(67,233,123,0.07);
+    border-left: 3px solid var(--accent3);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    color: #c8f0d8;
+    margin-top: 12px;
+  }
+  .warn-box {
+    background: rgba(255,101,132,0.07);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    color: #f0c8d0;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <div class="badge">📡 Prueba el Lunes</div>
+    <h1>Arquitecturas de Redes<br>y sus Intervenciones</h1>
+    <p>// resumen completo · todo entra (excepto ventajas/desventajas, cliente-servidor y p2p)</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>Índice</h3>
+    <a href="#glosario">① Conceptos Básicos (Glosario)</a>
+    <a href="#clasificacion">② Clasificación de Redes</a>
+    <a href="#caracteristicas">③ Características de la Arquitectura</a>
+    <a href="#modelos">④ Los 6 Modelos de Arquitectura</a>
+    <a href="#topologias">⑤ Topologías de Red</a>
+  </div>
+
+  <!-- ===== 1. GLOSARIO ===== -->
+  <div class="section-title" id="glosario">① Conceptos Básicos</div>
+  <div class="card">
+    <div class="glosario-item">
+      <strong>Ancho de Banda</strong>
+      <p>Capacidad de transmitir datos en un tiempo determinado. Se mide en bps, Mbps o Gbps.</p>
+    </div>
+    <div class="glosario-item">
+      <strong>Arquitectura de Redes</strong>
+      <p>Diseño estructural y lógico que define cómo se organizan, conectan y comunican los componentes de una red. Establece reglas, protocolos y jerarquía del hardware.</p>
+    </div>
+    <div class="glosario-item">
+      <strong>Nodos</strong>
+      <p>Cualquier dispositivo conectado a una red con capacidad de enviar, recibir o procesar datos. Debe tener una dirección única (IP o MAC).</p>
+    </div>
+    <div class="glosario-item">
+      <strong>Topologías</strong>
+      <p>Forma física o lógica de la red. Determina cómo se distribuye el tráfico y qué pasa si un equipo falla.</p>
+    </div>
+    <div class="glosario-item">
+      <strong>Latencia</strong>
+      <p>Tiempo que tarda un paquete de datos en ir del emisor al receptor. Clave en videojuegos y videollamadas. Podés tener muchos Mbps y aun así tener lag.</p>
+    </div>
+    <div class="glosario-item">
+      <strong>Protocolos</strong>
+      <p>Reglas para que dos equipos se entiendan. El más famoso: TCP/IP (el lenguaje de Internet).</p>
+    </div>
+    <div class="glosario-item">
+      <strong>Medios de Transmisión</strong>
+      <p>Soporte físico o vía por la cual viaja la información (cables, fibra óptica, señal inalámbrica).</p>
+    </div>
+    <div class="glosario-item">
+      <strong>Paquete vs. Mensaje</strong>
+      <p><strong style="color:#e8e8f0">Mensaje:</strong> La unidad completa y lógica que envía una aplicación (ej: un e-mail entero, un archivo).<br>
+      <strong style="color:#e8e8f0">Paquete:</strong> Fragmento pequeño del mensaje. Cada paquete lleva origen, destino y parte de los datos.<br>
+      <em style="color:var(--muted)">Analogía: el mensaje es la carta completa; los paquetes son las hojas numeradas en distintos sobres que se rearman al llegar.</em></p>
+    </div>
+    <div class="glosario-item">
+      <strong>Clasificación de Redes</strong>
+      <p>Las redes se clasifican por alcance geográfico, función/tecnología, especialización/entorno y cercanías específicas.</p>
+    </div>
+  </div>
+
+  <!-- ===== 2. CLASIFICACIÓN ===== -->
+  <div class="section-title" id="clasificacion">② Clasificación de Redes</div>
+
+  <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">Existen 4 grupos de clasificación:</p>
+
+  <!-- 2A: Alcance Geográfico -->
+  <div class="card">
+    <div class="card-title">Redes de Alcance Geográfico <span class="tag">GRUPO 1</span></div>
+    <table class="net-table">
+      <thead>
+        <tr><th>Sigla</th><th>Nombre</th><th>¿Qué es?</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="sigla">PAN</td><td>Personal Area Network</td><td>Alcance de pocos metros, un solo usuario.</td><td>Celular + auriculares Bluetooth, mouse inalámbrico.</td></tr>
+        <tr><td class="sigla">LAN</td><td>Local Area Network</td><td>Área local (casa, aula, oficina). Rápida y privada.</td><td>WiFi de tu casa, laboratorio del colegio.</td></tr>
+        <tr><td class="sigla">WLAN</td><td>Wireless LAN</td><td>Variante inalámbrica de la LAN, usa Wi-Fi.</td><td>WiFi del hogar conectando celular, notebook, TV.</td></tr>
+        <tr><td class="sigla">CAN</td><td>Campus Area Network</td><td>Interconecta varias LAN en un área específica.</td><td>Campus universitario, base militar, escuela entera.</td></tr>
+        <tr><td class="sigla">MAN</td><td>Metropolitan Area Network</td><td>Cubre una ciudad o municipio.</td><td>Edificios públicos, sedes bancarias en una misma zona urbana.</td></tr>
+        <tr><td class="sigla">WAN</td><td>Wide Area Network</td><td>Conecta ciudades, países o continentes. "Red de redes".</td><td>Conexión de cuentas bancarias entre países (ej: Mercado Pago Argentina–España).</td></tr>
+        <tr><td class="sigla">GAN</td><td>Global Area Network</td><td>Abarca todo el mundo.</td><td>Internet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 2B: Función o Tecnología -->
+  <div class="card">
+    <div class="card-title">Redes por Función o Tecnología <span class="tag">GRUPO 2</span></div>
+    <table class="net-table">
+      <thead>
+        <tr><th>Sigla</th><th>Nombre</th><th>¿Qué es?</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="sigla">SAN</td><td>Storage Area Network</td><td>Red de alta velocidad para conectar servidores con almacenamiento masivo.</td><td>Servidores empresariales con unidades de almacenamiento masivo.</td></tr>
+        <tr><td class="sigla">VLAN</td><td>Virtual Local Area Network</td><td>Redes lógicamente independientes dentro de una misma red física. Mejora seguridad y administración.</td><td>Computadoras de un ciber conectadas entre sí para compartir datos o jugar en red.</td></tr>
+        <tr><td class="sigla">VPN</td><td>Virtual Private Network</td><td>Crea un "túnel seguro" sobre una red pública (Internet) para conectar dispositivos de forma privada.</td><td>Ver Netflix de EE.UU. simulando que tu conexión sale desde allá.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 2C: Especialización -->
+  <div class="card">
+    <div class="card-title">Redes por Especialización o Entorno <span class="tag">GRUPO 3</span></div>
+    <table class="net-table">
+      <thead>
+        <tr><th>Sigla</th><th>Nombre</th><th>¿Qué es?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="sigla">EPN</td><td>Enterprise Private Network</td><td>Red privada de una empresa para conectar sus sedes de forma segura, sin depender de servicios públicos.</td></tr>
+        <tr><td class="sigla">POLÁN</td><td>Passive Optical LAN</td><td>Usa fibra óptica y divisores ópticos para llevar señal, eliminando muchos switches intermedios.</td></tr>
+        <tr><td class="sigla">SYAN</td><td>System Area Network</td><td>Red de alta velocidad que conecta clústeres de computadoras para cálculos complejos (alto rendimiento).</td></tr>
+        <tr><td class="sigla">WMAN</td><td>Wireless Metropolitan Area Network</td><td>Versión inalámbrica de la MAN. Usa tecnologías como WiMAX para dar cobertura a una ciudad sin cables.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 2D: Cercanías -->
+  <div class="card">
+    <div class="card-title">Redes de Cercanías Específicas <span class="tag">GRUPO 4</span></div>
+    <table class="net-table">
+      <thead>
+        <tr><th>Sigla</th><th>Nombre</th><th>¿Qué es?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="sigla">BAN</td><td>Body Area Network</td><td>Conecta dispositivos electrónicos wearables o implantados en el cuerpo (marcapasos inteligentes, sensores de salud).</td></tr>
+        <tr><td class="sigla">HAN</td><td>Home Area Network</td><td>Red de una casa que conecta PC, celular y electrodomésticos inteligentes (domótica).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== 3. CARACTERÍSTICAS ===== -->
+  <div class="section-title" id="caracteristicas">③ Características de la Arquitectura</div>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Son 7 características principales:</p>
+
+  <!-- Tolerancia a Fallas -->
+  <div class="card c-purple" style="border-top:3px solid var(--accent)">
+    <div class="model-header">
+      <div class="model-num">01</div>
+      <div class="model-name">Tolerancia a Fallas</div>
+    </div>
+    <p>Capacidad de la red para <strong>seguir funcionando</strong> incluso cuando falla uno o más componentes. Se logra mediante <strong>redundancia</strong>: múltiples caminos o componentes duplicados. Si un cable o router se rompe, los datos se redirigen automáticamente por otra vía.</p>
+    <div class="highlight-box">🔁 Se ve claramente en la <strong>Topología de Malla</strong>, donde los nodos están interconectados. No debe confundirse con Alta Disponibilidad.</div>
+  </div>
+
+  <!-- Alta Disponibilidad -->
+  <div class="card" style="border-top:3px solid #38bdf8">
+    <div class="model-header">
+      <div class="model-num">02</div>
+      <div class="model-name">Alta Disponibilidad</div>
+    </div>
+    <p>Busca que el sistema esté <strong>activo la mayor parte del tiempo</strong>. A diferencia de la tolerancia a fallas (sin interrupciones), la alta disponibilidad acepta breves pausas pero se recupera casi de inmediato.</p>
+    <p style="margin-top:10px;font-weight:600;color:#e8e8f0">Tres pilares:</p>
+    <ul class="bullets" style="margin-top:8px">
+      <li><strong>Eliminación de SPOF</strong> (Single Point of Failure): añadir componentes redundantes para que el fallo de uno solo no tumbe todo.</li>
+      <li><strong>Confiabilidad del Cruce (Crossover):</strong> mecanismos que detectan la falla y mueven el tráfico al componente de respaldo automáticamente.</li>
+      <li><strong>Detección de fallas:</strong> monitoreo constante para detectar fallos en milisegundos.</li>
+    </ul>
+    <p style="margin-top:16px;font-weight:600;color:#e8e8f0">Medición — Porcentaje de uptime al año:</p>
+    <table class="net-table nueves" style="margin-top:8px">
+      <tr><td>99% (Dos nueves)</td><td>Puede fallar hasta 3,65 días al año</td><td style="color:var(--accent2)">Baja disponibilidad</td></tr>
+      <tr><td>99,9% (Tres nueves)</td><td>Puede estar caído 8,77 horas al año</td><td></td></tr>
+      <tr><td>99,99% (Cuatro nueves)</td><td>Puede estar caído 52,56 minutos al año</td><td></td></tr>
+      <tr><td>99,999% (Cinco nueves) ⭐</td><td>Solo puede fallar 5,26 minutos al año</td><td style="color:var(--accent3)">Alta disponibilidad real</td></tr>
+    </table>
+  </div>
+
+  <!-- Escalabilidad -->
+  <div class="card c-green" style="border-top:3px solid var(--accent3)">
+    <div class="model-header">
+      <div class="model-num">03</div>
+      <div class="model-name">Escalabilidad</div>
+    </div>
+    <p>Capacidad de crecer y manejar más demanda (usuarios, tráfico, dispositivos) <strong>sin rediseñar desde cero</strong>. Hay dos formas de escalar:</p>
+    <div class="grid2" style="margin-top:14px">
+      <div class="pillar c-purple">
+        <h4>↑ Scaling Up (Vertical)</h4>
+        <p>Más potencia al hardware existente. Ej: router más potente, más RAM al servidor, cable de 10 Gbps. <strong>Tiene techo físico.</strong></p>
+      </div>
+      <div class="pillar c-green">
+        <h4>↔ Scaling Out (Horizontal)</h4>
+        <p>Más nodos/dispositivos para repartir el trabajo. Ej: agregar servidores con balanceador de carga. <strong>Teóricamente infinita.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seguridad -->
+  <div class="card" style="border-top:3px solid var(--accent2)">
+    <div class="model-header">
+      <div class="model-num">04</div>
+      <div class="model-name">Seguridad de Redes</div>
+    </div>
+    <p>Conjunto de tecnologías, procesos y políticas para proteger la red y los datos. Tres pilares fundamentales (<strong>Tríada de Seguridad</strong>):</p>
+    <div class="grid3" style="margin-top:14px">
+      <div class="pillar c-purple"><h4>🔒 Confidencialidad</h4><p>Solo personas autorizadas acceden a la información.</p></div>
+      <div class="pillar c-green"><h4>✅ Integridad</h4><p>Los datos no son modificados o manipulados indebidamente.</p></div>
+      <div class="pillar c-blue"><h4>📶 Disponibilidad</h4><p>Sistemas y datos accesibles para usuarios legítimos cuando los necesitan.</p></div>
+    </div>
+    <p style="margin-top:14px;font-weight:600;color:#e8e8f0">Protocolos:</p>
+    <ul class="bullets">
+      <li><strong>HTTPS (TLS/SSL):</strong> cifra la comunicación entre navegador y sitio web.</li>
+      <li><strong>SFTP:</strong> versión segura del FTP que usa SSH para cifrado.</li>
+    </ul>
+    <p style="margin-top:12px;font-weight:600;color:#e8e8f0">Tecnologías principales:</p>
+    <ul class="bullets">
+      <li><strong>Firewall (Cortafuegos):</strong> filtra tráfico entrante/saliente según reglas de seguridad.</li>
+      <li><strong>VPN:</strong> túnel seguro sobre red pública (ya definida arriba).</li>
+      <li><strong>MFA (Autenticación de Múltiples Factores):</strong> más de una prueba de identidad (contraseña + código al celular).</li>
+    </ul>
+    <p style="margin-top:12px;font-weight:600;color:#e8e8f0">Políticas y enfoques:</p>
+    <ul class="bullets">
+      <li><strong>Política de contraseñas:</strong> requisitos de complejidad, longitud y frecuencia de cambio.</li>
+      <li><strong>Zero Trust (Confianza Cero):</strong> no se confía en nadie por defecto; se verifica cada conexión independientemente.</li>
+      <li><strong>BYOD (Bring Your Own Device):</strong> reglas para empleados que usan sus propios dispositivos en la red de la empresa.</li>
+    </ul>
+  </div>
+
+  <!-- QoS -->
+  <div class="card" style="border-top:3px solid #fb923c">
+    <div class="model-header">
+      <div class="model-num">05</div>
+      <div class="model-name">Calidad de Servicios (QoS)</div>
+    </div>
+    <p>Herramientas para <strong>administrar el tráfico</strong> y garantizar que las aplicaciones más importantes funcionen bien incluso con la red saturada. Evita:</p>
+    <ul class="bullets" style="margin-top:8px">
+      <li><strong>Latencia:</strong> retraso en llegada de datos (juegos online, llamadas).</li>
+      <li><strong>Jitter:</strong> variaciones en el tiempo de llegada de paquetes → cortes en audio/video.</li>
+      <li><strong>Pérdida de paquetes:</strong> datos que no llegan por congestión.</li>
+    </ul>
+    <p style="margin-top:14px;font-weight:600;color:#e8e8f0">Pasos del sistema QoS:</p>
+    <ol class="step-list" style="margin-top:10px">
+      <li><strong>Clasificación y Marcado:</strong> identifica el tipo de tráfico (voz, video, descargas) y le asigna una etiqueta de prioridad.</li>
+      <li><strong>Encolado:</strong> organiza paquetes en filas. Los de alta prioridad se procesan antes.</li>
+      <li><strong>Gestión de ancho de banda:</strong> reserva velocidad mínima para servicios esenciales.</li>
+    </ol>
+  </div>
+
+  <!-- Gestión Eficiente -->
+  <div class="card" style="border-top:3px solid #fbbf24">
+    <div class="model-header">
+      <div class="model-num">06</div>
+      <div class="model-name">Gestión Eficiente</div>
+    </div>
+    <p>Capacidad de administrar los <strong>recursos limitados</strong> (ancho de banda, procesamiento) para que el sistema global funcione de forma óptima. Actúa en:</p>
+    <ul class="bullets" style="margin-top:8px">
+      <li>Priorización de tráfico crítico (QoS).</li>
+      <li>Control y optimización del ancho de banda.</li>
+      <li>Prevención y manejo de la congestión.</li>
+      <li>Monitoreo proactivo.</li>
+    </ul>
+  </div>
+
+  <!-- Paquetes y Mensajes (ya en glosario, refuerzo) -->
+  <div class="card" style="border-top:3px solid #a78bfa">
+    <div class="model-header">
+      <div class="model-num">07</div>
+      <div class="model-name">Paquetes y Mensajes</div>
+    </div>
+    <div class="grid2" style="margin-top:4px">
+      <div class="pillar c-purple">
+        <h4>📨 Mensaje</h4>
+        <p>Unidad de información completa y lógica que envía una aplicación (e-mail entero, un archivo). El contenido "en bruto".</p>
+      </div>
+      <div class="pillar c-orange" style="border-top:3px solid #fb923c">
+        <h4>📦 Paquete</h4>
+        <p>Fragmento pequeño del mensaje. Incluye dirección de origen, destino y parte de los datos. Se rearman en el receptor.</p>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:12px">📖 Analogía: el mensaje es la carta completa; los paquetes son las hojas numeradas en diferentes sobres que llegan y se rearman.</div>
+  </div>
+
+  <!-- ===== 4. MODELOS ===== -->
+  <div class="section-title" id="modelos">④ Los 6 Modelos de Arquitectura</div>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">⚠️ Cliente-Servidor y P2P <strong>no entran</strong> en la prueba — se incluyen los 4 restantes.</p>
+
+  <!-- Modelo 3: Nube -->
+  <div class="card" style="border-top:3px solid #38bdf8">
+    <div class="model-header">
+      <div class="model-num">03</div>
+      <div class="model-name">Computación en la Nube (Cloud Computing)</div>
+    </div>
+    <p>Evolución masiva del modelo cliente-servidor. El "servidor" no es una máquina física conocida, sino un <strong>pool de recursos virtuales</strong> repartidos por el mundo. Se basa en <strong>virtualización</strong>: los recursos (CPU, RAM, disco) se abstraen del hardware y se entregan como servicio bajo demanda.</p>
+    <p style="margin-top:10px">El cliente se conecta a una interfaz que lo deriva al servidor más libre dentro de una <strong>granja de datos</strong>.</p>
+    <ul class="bullets" style="margin-top:10px">
+      <li><strong>Ahorro de Hardware:</strong> usás la potencia de servidores ajenos.</li>
+      <li><strong>Disponibilidad Total:</strong> acceso desde cualquier dispositivo y lugar con internet.</li>
+      <li><strong>Pago por uso:</strong> pagás solo por el almacenamiento o potencia que usás (como la luz o el gas).</li>
+    </ul>
+    <div class="highlight-box">Ejemplos: Google Drive, AWS, Azure.</div>
+  </div>
+
+  <!-- Modelo 4: Niebla -->
+  <div class="card" style="border-top:3px solid #a3e635">
+    <div class="model-header">
+      <div class="model-num">04</div>
+      <div class="model-name">Computación en la Niebla (Fog Computing)</div>
+    </div>
+    <p>Nace para resolver el problema de <strong>latencia de la nube</strong>. Es una capa intermedia que acerca la potencia de cómputo al usuario. Extiende la nube hacia el "borde" de la red local: el procesamiento ocurre en <strong>nodos intermedios</strong> (routers industriales, micro-servidores locales) en lugar de viajar miles de km a centros de datos.</p>
+    <ul class="bullets" style="margin-top:10px">
+      <li><strong>Filtración de datos:</strong> el nodo de niebla decide qué procesar ahí mismo (lo urgente) y qué mandar a la nube.</li>
+      <li><strong>Menor congestión:</strong> no satura internet mandando datos innecesarios.</li>
+      <li><strong>Baja latencia:</strong> respuestas más rápidas porque el dato recorre menos camino.</li>
+      <li><strong>Privacidad:</strong> los datos sensibles se quedan en la red local.</li>
+    </ul>
+    <div class="highlight-box">Usado en <strong>ciudades inteligentes (Smart Cities)</strong>: semáforos o cámaras que reaccionan en milisegundos sin depender de si internet anda lento.</div>
+  </div>
+
+  <!-- Modelo 5: Maestro-Esclavo -->
+  <div class="card" style="border-top:3px solid #f59e0b">
+    <div class="model-header">
+      <div class="model-num">05</div>
+      <div class="model-name">Modelo Maestro-Esclavo</div>
+    </div>
+    <p>Control <strong>jerárquico estricto</strong>. El esclavo no hace nada si el maestro no lo ordena. Se basa en la <strong>unidireccionalidad del control</strong>.</p>
+    <ul class="bullets" style="margin-top:10px">
+      <li>El <strong>Maestro</strong> gestiona el bus de datos y decide quién habla y cuándo.</li>
+      <li>Los <strong>Esclavos</strong> son nodos pasivos que solo responden a comandos específicos.</li>
+      <li>El esclavo <strong>NUNCA</strong> inicia la comunicación.</li>
+    </ul>
+    <div class="grid3" style="margin-top:14px">
+      <div class="pillar c-yellow" style="border-top:3px solid #fbbf24">
+        <h4>Control Absoluto</h4>
+        <p>El Maestro sabe qué hace cada esclavo en cada milisegundo. Sin caos de tráfico.</p>
+      </div>
+      <div class="pillar c-purple">
+        <h4>Esclavos Simples</h4>
+        <p>Los dispositivos esclavos pueden ser baratos porque solo obedecen, no "piensan".</p>
+      </div>
+      <div class="pillar c-green">
+        <h4>Consistencia de Datos</h4>
+        <p>Solo el Maestro decide quién escribe. Sin choques de datos ni duplicaciones.</p>
+      </div>
+    </div>
+    <div class="highlight-box">Usos: comunicación interna de hardware, bases de datos donde un servidor "maestro" escribe y los "esclavos" solo replican la info para lectura.</div>
+  </div>
+
+  <!-- Modelo 6: Edge Computing -->
+  <div class="card" style="border-top:3px solid var(--accent2)">
+    <div class="model-header">
+      <div class="model-num">06</div>
+      <div class="model-name">Computación en el Borde (Edge Computing / Agentes)</div>
+    </div>
+    <p>El modelo <strong>más extremo de descentralización</strong>. El dato se procesa <strong>en la fuente original donde se genera</strong>. El propio dispositivo final tiene su chip de procesamiento potente, analiza la realidad, toma una decisión y solo envía un reporte final a la red central.</p>
+    <ul class="bullets" style="margin-top:10px">
+      <li><strong>Respuesta en Tiempo Real:</strong> el modelo más rápido — el dato ni sale del dispositivo (ej: el auto frena al instante).</li>
+      <li><strong>Funciona sin Internet:</strong> puede tomar decisiones inteligentes aunque se corte la conexión ("tiene su propio cerebro").</li>
+      <li><strong>Ahorro de Batería y Datos:</strong> no transmite video ni datos pesados constantemente → menor consumo de energía.</li>
+    </ul>
+    <div class="highlight-box">Usos: <strong>autos autónomos</strong> (frenan en microsegundos con sus propios sensores) y <strong>cámaras de seguridad con IA</strong> que detectan caras sin mandar video a internet.</div>
+  </div>
+
+  <!-- ===== 5. TOPOLOGÍAS ===== -->
+  <div class="section-title" id="topologias">⑤ Topologías de Red</div>
+  <div class="card" style="margin-bottom:18px">
+    <p>Definen el <strong>mapa o diseño de cómo se conectan los nodos</strong> para intercambiar datos. El "esqueleto" que decide qué camino toma la información.</p>
+    <div class="grid2" style="margin-top:14px">
+      <div class="pillar c-purple">
+        <h4>Topología Física</h4>
+        <p>Cómo están tirados los cables y dónde se ubican los equipos en el espacio físico.</p>
+      </div>
+      <div class="pillar c-blue" style="border-top:3px solid #38bdf8">
+        <h4>Topología Lógica</h4>
+        <p>Cómo viajan realmente los datos por dentro (aunque por fuera parezca otra cosa).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="topo-grid">
+    <div class="topo-card" style="border-top:3px solid #fb923c">
+      <h4>1. 🚌 Bus</h4>
+      <p>Un solo cable largo (troncal) al que se conectan todas las computadoras. Los paquetes viajan por el cable y cada compu verifica si el mensaje es para ella.</p>
+      <div class="con">✗ Si el cable principal se corta, toda la red cae.<br>✗ Solo una computadora puede hablar a la vez (lenta).</div>
+    </div>
+    <div class="topo-card" style="border-top:3px solid #a78bfa">
+      <h4>2. 💍 Anillo (Ring)</h4>
+      <p>Cada computadora está conectada con la de al lado formando un círculo cerrado. Los datos viajan en una sola dirección. Se usa un "token" como permiso para hablar.</p>
+      <div class="con">✗ Si un nodo o cable falla, el círculo se rompe y la red cae.</div>
+    </div>
+    <div class="topo-card" style="border-top:3px solid #38bdf8">
+      <h4>3. ⭐ Estrella (Star)</h4>
+      <p>Todos los equipos se conectan a un aparato central (switch o router).</p>
+      <div class="pro">✔ Si se rompe el cable de una compu, solo esa queda sin red.</div>
+      <div class="con">✗ Si se rompe el Switch central, toda la red cae.</div>
+    </div>
+    <div class="topo-card" style="border-top:3px solid var(--accent3)">
+      <h4>4. 🕸 Malla (Mesh)</h4>
+      <p>Todos conectados con todos (o casi todos). La más segura. Si un camino falla, los paquetes van por otro.</p>
+      <div class="pro">✔ Muy robusta, sin puntos únicos de falla.</div>
+      <div class="con">✗ Muy cara: necesita muchísimos cables y puertos.<br><em style="color:var(--muted);font-size:12px">Usada en WiFi moderno para eliminar puntos ciegos.</em></div>
+    </div>
+    <div class="topo-card" style="border-top:3px solid #fbbf24">
+      <h4>5. 🌳 Árbol (Tree)</h4>
+      <p>Un nodo central (raíz) conectado a switches, de los cuales cuelgan las computadoras. Ideal para edificios de varios pisos: un switch por piso conectado a un switch central.</p>
+    </div>
+    <div class="topo-card" style="border-top:3px solid var(--accent2)">
+      <h4>6. 🔀 Híbrida</h4>
+      <p>Combina dos o más topologías para aprovechar fortalezas y mitigar debilidades. Ej: estrella dentro de cada departamento + anillo entre departamentos.</p>
+      <div class="pro">✔ Flexible y adaptable a necesidades específicas.</div>
+      <p style="font-size:12px;color:var(--muted);margin-top:6px">Común en redes empresariales grandes.</p>
+    </div>
+  </div>
+
+  <!-- Estrella Extendida -->
+  <div class="card" style="border-top:3px solid #38bdf8">
+    <div class="card-title">7. ⭐+ Estrella Extendida (Modificada)</div>
+    <p>Variante de la estrella simple donde los nodos periféricos no son solo dispositivos finales, sino que pueden ser otros <strong>concentradores (hubs o switches)</strong> que a su vez conectan a más dispositivos. Permite expandir la red en capas sin perder la estructura centralizada.</p>
+  </div>
+
+  <div style="margin-top:40px;text-align:center;font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">
+    ¡Mucha suerte el lunes! 🚀 · Arquitecturas de Redes · ET26 DE6
+  </div>
+
+</div>
+</body>
+</html>
